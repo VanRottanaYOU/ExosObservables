@@ -1,0 +1,21 @@
+export class Produit {
+    id: number;
+    libelle: string;
+    codeFournisseur: number;
+    quantiteInitiale: number;
+    quantiteRestante: number;
+    dateLimite: string;
+    dateAchat: string;
+    prixAchat: number;
+
+    constructor (libelle, codeFournisseur, quantiteInitiale, quantiteRestante, dateLimite, dateAchat, prixAchat){
+        this.libelle=libelle;
+        this.codeFournisseur=codeFournisseur;
+        this.quantiteInitiale=quantiteInitiale;
+        this.quantiteRestante=quantiteRestante;
+        this.dateLimite=dateLimite;
+        this.dateAchat=dateAchat;
+        this.prixAchat=prixAchat;
+    }
+    
+}
