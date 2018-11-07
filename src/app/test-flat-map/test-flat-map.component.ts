@@ -23,7 +23,7 @@ export class TestFlatMapComponent implements OnInit {
   produits1 : Observable<ProduitsEnVente[]>;
   produit3 : Observable<Produit[]>;
   produit4 : Observable<Produit[]>;
-  produit5 : Observable<Produit[]>;
+  produit5 : Produit[];
 
   constructor(
     private http: HttpClient
@@ -65,9 +65,10 @@ export class TestFlatMapComponent implements OnInit {
     this.produits1=this.search2("Coca");
     this.produit3=this.search3("2019-09-25");
     this.produit4=this.search4("Coca");
-    this.produit5=this.search5("Coca");
-    this.miseajour("Coca")
-    this.produit5=this.search5("Coca");
+    //this.produit5=this.search5("Coca");
+    this.search5("Coca");
+    //this.miseajour("Coca")
+    //this.produit5=this.search5("Coca");
   }
 
   search1(): Observable<ProduitsEnVente[]> {
@@ -93,10 +94,16 @@ export class TestFlatMapComponent implements OnInit {
       return this.http.get<Produit[]>(`${apiURL}`, { params })    
   }
 
-  search5(libelle : string) :Observable<Produit[]>{
-    let listproduit: Observable<Produit[]> = this.search4(libelle)
-    .pipe(map(items => items.sort(this.comparer)));
-    return listproduit
+  search5(libelle : string) {
+    this.search4(libelle)
+    .pipe(map(items => items.sort(this.comparer))
+    )
+    .subscribe(
+      (articles: Produit[]) => {
+        this.produit5 = articles;
+        this.ngOnInit();
+      }
+    );
   }
 
   miseajourproduit(produit : Produit){
@@ -124,23 +131,23 @@ export class TestFlatMapComponent implements OnInit {
     return 0;
   }
 
-  miseajour(libelle : string){
-    let listproduit: Observable<Produit[]> =this.search5(libelle);
+  // miseajour(libelle : string){
+  //   let listproduit: Observable<Produit[]> =this.search5(libelle);
 
-    listproduit.forEach(
-      (produits: Produit[]) => {
-        let that = this;
-        produits.forEach(
-          (produit: Produit) => {
-            console.log(produit.id+" "+produit.libelle+" "+produit.quantiteRestante)
-           if(produit.quantiteRestante >= 30){
-              this. miseajourproduit(produit)
-              console.log(produit.id+" "+produit.libelle+" "+produit.quantiteRestante)
-           }
-          }
-        )
-      }
-    );
-  }
+  //   listproduit.forEach(
+  //     (produits: Produit[]) => {
+  //       let that = this;
+  //       produits.forEach(
+  //         (produit: Produit) => {
+  //           console.log(produit.id+" "+produit.libelle+" "+produit.quantiteRestante)
+  //          if(produit.quantiteRestante >= 30){
+  //             this. miseajourproduit(produit)
+  //             console.log(produit.id+" "+produit.libelle+" "+produit.quantiteRestante)
+  //          }
+  //         }
+  //       )
+  //     }
+  //   );
+  // }
 
 }
