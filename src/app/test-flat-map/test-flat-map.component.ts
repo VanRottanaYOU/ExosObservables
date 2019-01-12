@@ -183,9 +183,7 @@ export class TestFlatMapComponent implements OnInit {
         map(res => {
                       console.log(res)
                       // console.log(res[0]['libelle'])
-                      if (res[0] !=
-                        
-                        null){
+                      if (res[0] != null){
                         console.log(res[0]['libelle'])
                         return true
                       }else{
