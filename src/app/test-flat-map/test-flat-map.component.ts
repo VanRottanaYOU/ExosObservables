@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 import { map, flatMap, min } from 'rxjs/operators';
 import { GithubUser } from '../interfaces/GitHubUsers';
 import { Produit } from 'src/app/models/Produit';
+import { Commande } from 'src/app/models/Commande';
 import { ProduitsEnVente } from 'src/app/models/ProduitsEnVente';
 import { Observable } from 'rxjs';
 
@@ -24,6 +25,12 @@ export class TestFlatMapComponent implements OnInit {
   produit3 : Observable<Produit[]>;
   produit4 : Observable<Produit[]>;
   produit5 : Produit[];
+
+  commandes1 : Observable<Commande[]>;
+  subscription: Object = null;
+  commandes2: Commande[];
+  hasCoca : boolean = false;
+  hasMerguez : boolean = false;
 
   constructor(
     private http: HttpClient
@@ -69,6 +76,14 @@ export class TestFlatMapComponent implements OnInit {
     this.search5("Coca");
     //this.miseajour("Coca")
     //this.produit5=this.search5("Coca");
+    this.commandes1=this.getCommandes();
+    this.subscribeObservableCommandes();
+    this.subscribeObservableSearch6("Coca");
+    this.subscribeObservableSearch6("Mergue");
+  }
+
+  refresh(){
+    this.search5("Coca");
   }
 
   search1(): Observable<ProduitsEnVente[]> {
@@ -101,7 +116,6 @@ export class TestFlatMapComponent implements OnInit {
     .subscribe(
       (articles: Produit[]) => {
         this.produit5 = articles;
-        this.ngOnInit();
       }
     );
   }
@@ -149,5 +163,43 @@ export class TestFlatMapComponent implements OnInit {
   //     }
   //   );
   // }
+
+  getCommandes(){
+    let apiURL = "http://127.0.0.1:3000/commandes";
+    return this.http.get<Commande[]>(apiURL)
+  }
+
+  subscribeObservableCommandes(){
+    this.subscription = this.getCommandes().subscribe(
+      v => (this.commandes2 = v)
+    );
+  }
+
+  search6(libelle : string) {
+    let params = new HttpParams().set('libelle', libelle);
+    let apiURL = "http://127.0.0.1:3000/produitsEnVente";
+      return this.http.get<ProduitsEnVente[]>(`${apiURL}`, { params })
+      .pipe(
+        map(res => {
+                      console.log(res)
+                      // console.log(res[0]['libelle'])
+                      if (res[0] !=
+                        
+                        null){
+                        console.log(res[0]['libelle'])
+                        return true
+                      }else{
+                        return false;
+                      }    
+                    }
+        )
+      )      
+  }
+
+  subscribeObservableSearch6(libelle : string){
+    this.subscription = this.search6(libelle).subscribe(
+      v => (this.hasMerguez = v)
+    );
+  }
 
 }

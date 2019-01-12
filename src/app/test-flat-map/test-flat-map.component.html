@@ -26,7 +26,7 @@
   {{produit.dateLimite}}
 </div> -->
 
-<hr>
+<!-- <hr>
 
 <div *ngFor="let produit of produit5">
   {{produit.libelle}}
@@ -34,4 +34,24 @@
   {{produit.prixvente}}
   {{produit.dateLimite}}
   {{produit.quantiteRestante}}
+</div> -->
+
+<div *ngFor="let commande of commandes1 | async">
+  {{commande.dateAchat}}
+  {{commande.prixAchat}}
+  <div *ngFor="let produit of commande.listeProduits">
+      {{produit}}
+      <!-- <span>{{subscribeObservableSearch6(produit)}}</span> -->
+      <span>{{hasMerguez}}</span>
+    <span [hidden]="hasMerguez ? 'visible' : 'hidden'"> {{produit}}</span>
+  </div>
 </div>
+
+<!-- <div *ngFor="let commande of commandes2">
+  {{commande.dateAchat}}
+  {{commande.prixAchat}}
+  <div *ngFor="let produit of commande.listeProduits">
+      {{produit}}
+    <span [hidden]="(search6(produit)) ? 'visible' : 'hidden'"> {{produit}}</span>
+  </div>
+</div> -->

@@ -128,7 +128,7 @@
     },
     {
       "id": 5,
-      "libelle": "Merguez",
+      "libelle": "Mergue",
       "categorie": "viande",
       "prixvente": 4
     },
@@ -192,5 +192,26 @@
       "role": "employe"
     }
   ],
-  "commandes": []
+  "commandes": [
+    {
+      "id": 1,
+      "dateAchat": "2018-09-21",
+      "prixAchat": 10.2,
+      "listeProduits": [
+        "Frite",
+        "Coca",
+        "Saucisse"
+      ]
+    },
+    {
+      "id": 2,
+      "dateAchat": "2018-09-22",
+      "prixAchat": 10.2,
+      "listeProduits": [
+        "Frite",
+        "Coca",
+        "Merguez"
+      ]
+    }
+  ]
 }
